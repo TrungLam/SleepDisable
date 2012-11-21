@@ -28,7 +28,7 @@ public class SleepDisable extends JavaPlugin implements Listener{
 	}
 	
 	@EventHandler
-	public void playerInteract(PlayerBedEnterEvent event){
+	public void playerEnter(PlayerBedEnterEvent event){
 		Player player = event.getPlayer();
 		Player[] players = player.getServer().getOnlinePlayers();
 		if (players.length == 1 && allowTime){

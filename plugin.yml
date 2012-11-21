@@ -1,5 +1,5 @@
 name: SleepDisable
 author: TrungLam
-version: 1.0.0
+version: 2.0.0
 main: com.github.TrungLam.SleepDisable
 description: Stops time from changing while a single person on the server uses a bed

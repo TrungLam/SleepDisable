@@ -2,6 +2,7 @@ package com.github.TrungLam;
 
 import java.util.logging.Logger;
 
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -31,16 +32,23 @@ public class SleepDisable extends JavaPlugin implements Listener{
 	public void playerEnter(PlayerBedEnterEvent event){
 		Player player = event.getPlayer();
 		Player[] players = player.getServer().getOnlinePlayers();
-		if (players.length == 1 && allowTime){
-			time = player.getWorld().getFullTime();
+		final World world = player.getWorld();
+		if (players.length == 1 && !allowTime){
+			time = world.getFullTime();
+			getServer().getScheduler().scheduleAsyncDelayedTask(this, new Runnable(){
+				public void run(){
+					world.setTime(time);
+				}
+			});
 		}
 	}
 	
 	@EventHandler
 	public void playerLeave(PlayerBedLeaveEvent event){
 		Player[] players = event.getPlayer().getServer().getOnlinePlayers();
-		if (players.length == 1 && allowTime){
+		if (players.length == 1 && !allowTime){
 			event.getPlayer().getWorld().setTime(time);
+			getServer().getScheduler().cancelTasks(this);
 		}
 	}
 
